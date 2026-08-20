@@ -3,3 +3,7 @@
 *.ali
 #et
 *.kate-swp
+
+# Alire
+/alire/
+/config/
