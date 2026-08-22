@@ -1,3 +1,6 @@
+-- GtkAda is supplied by the host development environment.  Set
+-- GPR_PROJECT_PATH to the directory containing gtkada.gpr before invoking
+-- Alire (the Nix flake does this automatically).
 with "gtkada.gpr";
 
 project et is
