@@ -1,0 +1,25 @@
+name = "et_ecad"
+description = "An ECAD-Tool for complex schematics and layouts"
+version = "0.1.0"
+website = "https://github.com/Blunk-electronic/ET"
+
+authors = ["Blunk electronic"]
+maintainers = ["Fabian Leimgruber <fabian.leimgruber@ait.ac.at>"]
+maintainers-logins = ["fleimgruber"]
+licenses = "GPL-3.0-or-later"
+
+project-files = ["src/et/et.gpr"]
+
+# GtkAda is not managed as an Alire dependency: it must be installed
+# separately and made discoverable to gprbuild via GPR_PROJECT_PATH.
+# On Linux, install a distro/system GtkAda package or build it from
+# source (see readme.txt in src/et). On Windows, see WINDOWS.md at the
+# repository root.
+
+[[depends-on]]
+# Pinned per the findings in WINDOWS.md: GNAT 16.1.0 (Alire's current
+# default) has a front-end regression rejecting a controlling-parameter
+# access conversion used by both gtkada and et's own code; 13.x is the
+# newest version confirmed to compile both cleanly.
+gnat_native = "~13.2"
+

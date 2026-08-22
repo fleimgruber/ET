@@ -2,17 +2,29 @@ with "gtkada.gpr";
 
 project et is
 
-	for exec_dir use external ("HOME") & "/bin";
-	--for exec_dir use ".";
+	for exec_dir use "bin";
 	for object_dir use "obj";
  	for source_dirs use ("." , "../lib");
  	for main use ("et");
 
 	package Compiler is
-		for Default_Switches ("Ada") use ("-O3");
+		for Default_Switches ("Ada") use ("-O3", "-gnat2012");
 		--for Default_Switches ("Ada") use ("-gnatn");
 	end Compiler;
- 	
+
+	package Builder is
+		-- force Ada 2012 for all units in the closure (including gtkada),
+		-- since newer GNAT defaults reject some anonymous access
+		-- conversions used by gtkada's own sources
+		for Global_Compilation_Switches ("Ada") use ("-gnat2012");
+
+		-- gtkada's own project (via shared.gpr) sets a tree-wide
+		-- Global_Configuration_Pragmas restricting implementation-defined
+		-- attributes, which otherwise silently applies to et's own units
+		-- too. Override it here since et.gpr is the main project.
+		for Global_Configuration_Pragmas use "gnat.adc";
+	end Builder;
+
 end et;
 
 -- see https://docs.adacore.com/gprbuild-docs/html/gprbuild_ug/gnat_project_manager.html
